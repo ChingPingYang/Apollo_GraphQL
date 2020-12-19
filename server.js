@@ -11,6 +11,7 @@ connectDB();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: (ctx) => ctx,
 });
 
 server.listen(PORT).then(({ url }) => {

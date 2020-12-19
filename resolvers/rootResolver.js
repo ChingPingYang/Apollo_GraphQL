@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
+const { verifyJWT } = require("../util/verifyJWT");
+const { AuthenticationError } = require("apollo-server");
 
 exports.resolvers = {
   Query: {
@@ -10,24 +12,33 @@ exports.resolvers = {
         const user = await User.findById(id);
         return user;
       } catch (err) {
-        console.log("failed fetching user...");
+        throw new AuthenticationError("failed fetching user...");
       }
     },
-    users: async () => {
+    users: async (_, __, context) => {
+      // verify user
+      const userToken = verifyJWT(context.req);
+      if (!userToken.id) {
+        throw new AuthenticationError(userToken.message);
+      }
+
       try {
-        const users = await User.find();
+        // Get users except the login user
+        const users = await User.find({ _id: { $ne: userToken.id } });
         return users;
       } catch (err) {
-        console.log("failed fetching users...");
+        throw new AuthenticationError("failed fetching users...");
       }
     },
     login: async (_, args) => {
+      // This response is what this function will return
       const response = {
         ok: false,
         errors: [],
         user: null,
       };
       const { username, password } = args;
+
       try {
         // Check if input is empty
         if (username.trim() === "")
