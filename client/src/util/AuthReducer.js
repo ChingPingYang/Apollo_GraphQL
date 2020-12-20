@@ -3,6 +3,7 @@ export const ACTION = {
   GET_USER_FAILED: "GET_USER_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   LOGIN_FAILED: "LOGIN_FAILED",
+  LOGOUT: "LOGOUT",
 };
 
 export const initAuth = {
@@ -36,6 +37,7 @@ const AuthReducer = (state = initAuth, action) => {
 
     case ACTION.GET_USER_FAILED:
     case ACTION.LOGIN_FAILED:
+    case ACTION.LOGOUT:
       localStorage.removeItem("token");
       return {
         ...state,

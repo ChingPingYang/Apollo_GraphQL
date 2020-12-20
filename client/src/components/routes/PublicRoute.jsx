@@ -6,7 +6,7 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => {
   const {
     state: { loading, authorized },
   } = useContext(AuthContext);
-  console.log(loading);
+
   if (loading) return <h1>Laoding!!!!!</h1>;
 
   return (

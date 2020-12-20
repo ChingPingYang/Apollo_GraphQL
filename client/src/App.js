@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_USER } from "./queries/query";
 import { ACTION } from "./util/AuthReducer";
 
+import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -29,6 +30,7 @@ function App() {
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       <Router>
+        <Nav />
         <Switch>
           <PublicRoute path="/" exact component={Home} />
           <PublicRoute path="/register" restricted component={Register} />
