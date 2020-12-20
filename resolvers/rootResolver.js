@@ -17,14 +17,15 @@ exports.resolvers = {
     },
     users: async (_, __, context) => {
       // verify user
-      const userToken = verifyJWT(context.req);
-      if (!userToken.id) {
-        throw new AuthenticationError(userToken.message);
-      }
+      //   const userToken = verifyJWT(context.req);
+      //   if (!userToken.id) {
+      //     throw new AuthenticationError(userToken.message);
+      //   }
 
       try {
         // Get users except the login user
-        const users = await User.find({ _id: { $ne: userToken.id } });
+        // const users = await User.find({ _id: { $ne: userToken.id } });
+        const users = await User.find();
         return users;
       } catch (err) {
         throw new AuthenticationError("failed fetching users...");
@@ -38,7 +39,7 @@ exports.resolvers = {
         user: null,
       };
       const { username, password } = args;
-
+      console.log(args);
       try {
         // Check if input is empty
         if (username.trim() === "")
