@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../util/AuthContext";
+import { ACTION } from "../util/AuthReducer";
+import { Link } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import { LOGIN_USER } from "../queries/query";
 
-const Login = () => {
+const Login = (props) => {
+  // Global State
+  const { state, dispatch } = useContext(AuthContext);
+  // GraphQL Query
   const [login, { loading, data }] = useLazyQuery(LOGIN_USER, {
     onCompleted: () => {
       console.log("completed!");
-      if (data.login.ok && data.login.user.token)
-        localStorage.setItem("token", data.login.user.token);
+      if (data.login.ok && data.login.user.token) {
+        dispatch({ type: ACTION.LOGIN_SUCCESS, payload: data.login.user });
+        props.history.push("/");
+      } else {
+        dispatch({ type: ACTION.LOGIN_FAILED, payload: data.login.errors });
+      }
     },
   });
 
@@ -50,6 +60,11 @@ const Login = () => {
           </div>
         </div>
         <button type="submit">submit</button>
+        <div>
+          <small>
+            Don't have an account?<Link to="/register">register</Link>
+          </small>
+        </div>
       </form>
       {data?.login.errors.length > 0 &&
         data.login.errors.map((error, index) => (

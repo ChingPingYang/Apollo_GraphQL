@@ -6,22 +6,20 @@ const { AuthenticationError } = require("apollo-server");
 
 exports.resolvers = {
   Query: {
-    user: async (_, args) => {
-      const { id } = args;
+    user: async (_, __, context) => {
+      const userToken = verifyJWT(context.req);
+      if (!userToken.id) {
+        console.log("noTTT");
+        throw new AuthenticationError(userToken.message);
+      }
       try {
-        const user = await User.findById(id);
+        const user = await User.findById(userToken.id);
         return user;
       } catch (err) {
         throw new AuthenticationError("failed fetching user...");
       }
     },
     users: async (_, __, context) => {
-      // verify user
-      //   const userToken = verifyJWT(context.req);
-      //   if (!userToken.id) {
-      //     throw new AuthenticationError(userToken.message);
-      //   }
-
       try {
         // Get users except the login user
         // const users = await User.find({ _id: { $ne: userToken.id } });
@@ -39,7 +37,7 @@ exports.resolvers = {
         user: null,
       };
       const { username, password } = args;
-      console.log(args);
+
       try {
         // Check if input is empty
         if (username.trim() === "")

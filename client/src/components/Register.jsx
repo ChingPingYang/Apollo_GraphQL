@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../queries/mutation";
 
 const Register = (props) => {
+  console.log(props);
   const [register, { data, loading }] = useMutation(REGISTER_USER, {
     update: () => {
       if (data?.register.ok) {
@@ -69,6 +71,11 @@ const Register = (props) => {
           </div>
         </div>
         <button type="submit">submit</button>
+        <div>
+          <small>
+            Have an account?<Link to="/login">Login</Link>
+          </small>
+        </div>
       </form>
       {loading ? <h1>Loading</h1> : <h1>Done</h1>}
       {data?.register.errors.length > 0 &&

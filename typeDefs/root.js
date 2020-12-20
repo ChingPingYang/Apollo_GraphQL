@@ -20,7 +20,7 @@ exports.typeDefs = gql`
   }
 
   type Query {
-    user(id: ID!): User
+    user: User
     users: [User]
     login(username: String!, password: String!): AuthResponse!
   }
