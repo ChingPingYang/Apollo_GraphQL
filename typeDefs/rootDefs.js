@@ -10,6 +10,15 @@ exports.typeDefs = gql`
     token: String
     createdAt: String
   }
+
+  type Message {
+    id: ID!
+    content: String!
+    from: ID!
+    to: ID!
+    createdAt: String
+  }
+
   type Error {
     message: String!
   }
@@ -23,6 +32,8 @@ exports.typeDefs = gql`
     user: User
     users: [User]
     login(username: String!, password: String!): AuthResponse!
+
+    getMessages(from: ID!): [Message]!
   }
   type Mutation {
     register(
@@ -31,5 +42,7 @@ exports.typeDefs = gql`
       password: String!
       confirmPassword: String!
     ): AuthResponse!
+
+    sendMessage(content: String!, to: ID!): Message!
   }
 `;

@@ -1,13 +1,20 @@
 const JWT = require("jsonwebtoken");
 
-exports.verifyJWT = (req) => {
+exports.verifyJWT = (context) => {
   let token = null;
-  if (!req.headers[`auth-token`]) return { message: "No token provided" };
-  token = req.headers[`auth-token`];
+  if (!context.req.headers[`auth-token`]) {
+    token = { message: "No token provided" };
+    context.token = token;
+    return context;
+  }
+  token = context.req.headers[`auth-token`];
   try {
     const decoded = JWT.verify(token, process.env.JWT_SECRET);
-    return decoded;
+    context.token = decoded;
+    return context;
   } catch (err) {
-    return { message: "Token is not valid" };
+    token = { message: "Token is not valid" };
+    context.token = decoded;
+    return context;
   }
 };
