@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../util/AuthContext";
+import { ACTION } from "../../util/AuthReducer";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../queries/mutation";
+import { REGISTER_USER } from "../../queries/mutation";
 
-const Register = (props) => {
-  console.log(props);
+const Register = () => {
+  const { dispatch } = useContext(AuthContext);
   const [register, { data, loading }] = useMutation(REGISTER_USER, {
-    update: () => {
-      if (data?.register.ok) {
-        props.history.push("/login");
+    update: (cache, { data: { register } }) => {
+      if (register.ok) {
+        console.log(register);
+        dispatch({
+          type: ACTION.REGISTER_USER_SUCCESS,
+          payload: register.user,
+        });
       } else {
-        console.log(data);
+        dispatch({
+          type: ACTION.REGISTER_USER_FAILED,
+          payload: register.errors,
+        });
       }
     },
   });

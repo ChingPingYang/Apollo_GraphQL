@@ -1,6 +1,6 @@
 import "./App.css";
-import { useReducer, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useReducer, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { AuthContext } from "./util/AuthContext";
 import AuthReducer, { initAuth } from "./util/AuthReducer";
 import { useQuery } from "@apollo/client";
@@ -8,9 +8,9 @@ import { GET_USER } from "./queries/query";
 import { ACTION } from "./util/AuthReducer";
 
 import Nav from "./components/Nav";
-import Home from "./components/Home";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Home from "./components/homePage/Home";
+import Register from "./components/registerPage/Register";
+import Login from "./components/loginPage/Login";
 import PublicRoute from "./components/routes/PublicRoute";
 
 function App() {
@@ -19,10 +19,12 @@ function App() {
   const { loading, error, data } = useQuery(GET_USER);
 
   useEffect(() => {
-    if (error) {
-      dispatch({ type: ACTION.GET_USER_FAILED, payload: error.graphQLErrors });
-    }
-    if (data) {
+    if (error && !data) {
+      dispatch({
+        type: ACTION.GET_USER_FAILED,
+        payload: error.graphQLErrors,
+      });
+    } else if (data) {
       dispatch({ type: ACTION.GET_USER_SUCCESS, payload: data.user });
     }
   }, [loading]);

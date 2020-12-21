@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../util/AuthContext";
-import { ACTION } from "../util/AuthReducer";
+import { AuthContext } from "../../util/AuthContext";
+import { ACTION } from "../../util/AuthReducer";
 import { Link } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
-import { LOGIN_USER } from "../queries/query";
+import { LOGIN_USER } from "../../queries/query";
 
 const Login = (props) => {
   // Global State
@@ -14,7 +14,6 @@ const Login = (props) => {
       console.log("completed!");
       if (data.login.ok && data.login.user.token) {
         dispatch({ type: ACTION.LOGIN_SUCCESS, payload: data.login.user });
-        props.history.push("/");
       } else {
         dispatch({ type: ACTION.LOGIN_FAILED, payload: data.login.errors });
       }

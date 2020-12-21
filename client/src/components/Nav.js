@@ -12,7 +12,12 @@ const Nav = () => {
         <Link to="/">Home</Link>
         <Link to="/register">Register</Link>
         <Link to="/login">Login</Link>
-        <button onClick={() => dispatch({ type: ACTION.LOGOUT, payload: [] })}>
+        <button
+          onClick={() => {
+            dispatch({ type: ACTION.LOGOUT, payload: [] });
+            window.location.reload();
+          }}
+        >
           Logout
         </button>
       </ul>

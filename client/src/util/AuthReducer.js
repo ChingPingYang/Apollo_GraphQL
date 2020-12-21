@@ -1,6 +1,8 @@
 export const ACTION = {
   GET_USER_SUCCESS: "GET_USER_SUCCESS",
   GET_USER_FAILED: "GET_USER_FAILED",
+  REGISTER_USER_SUCCESS: "REGISTER_USER_SUCCESS",
+  REGISTER_USER_FAILED: "REGISTER_USER_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   LOGIN_FAILED: "LOGIN_FAILED",
   LOGOUT: "LOGOUT",
@@ -25,6 +27,7 @@ const AuthReducer = (state = initAuth, action) => {
         errors: [],
       };
 
+    case ACTION.REGISTER_USER_SUCCESS:
     case ACTION.LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {
@@ -36,6 +39,7 @@ const AuthReducer = (state = initAuth, action) => {
       };
 
     case ACTION.GET_USER_FAILED:
+    case ACTION.REGISTER_USER_FAILED:
     case ACTION.LOGIN_FAILED:
     case ACTION.LOGOUT:
       localStorage.removeItem("token");

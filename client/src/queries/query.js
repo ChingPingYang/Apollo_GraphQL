@@ -19,10 +19,20 @@ export const LOGIN_USER = gql`
         message
       }
       user {
+        id
         username
         createdAt
         token
       }
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query {
+    users {
+      username
+      id
     }
   }
 `;

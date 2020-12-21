@@ -9,7 +9,6 @@ exports.resolvers = {
     user: async (_, __, context) => {
       const userToken = verifyJWT(context.req);
       if (!userToken.id) {
-        console.log("noTTT");
         throw new AuthenticationError(userToken.message);
       }
       try {
@@ -20,6 +19,10 @@ exports.resolvers = {
       }
     },
     users: async (_, __, context) => {
+      const userToken = verifyJWT(context.req);
+      if (!userToken.id) {
+        throw new AuthenticationError(userToken.message);
+      }
       try {
         // Get users except the login user
         // const users = await User.find({ _id: { $ne: userToken.id } });
@@ -102,6 +105,12 @@ exports.resolvers = {
           password: hashedPassword,
         });
         await newUser.save();
+
+        // Give token and return
+        const token = JWT.sign({ id: newUser.id }, process.env.JWT_SECRET, {
+          expiresIn: 60 * 60,
+        });
+        newUser.token = token;
         response.ok = true;
         response.user = newUser;
         return response;
