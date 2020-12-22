@@ -15,7 +15,7 @@ const Nav = () => {
         <button
           onClick={() => {
             dispatch({ type: ACTION.LOGOUT, payload: [] });
-            window.location.reload();
+            window.location.href = "/login";
           }}
         >
           Logout

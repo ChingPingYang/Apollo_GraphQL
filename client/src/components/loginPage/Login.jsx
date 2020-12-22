@@ -7,7 +7,7 @@ import { LOGIN_USER } from "../../queries/query";
 
 const Login = (props) => {
   // Global State
-  const { state, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   // GraphQL Query
   const [login, { loading, data }] = useLazyQuery(LOGIN_USER, {
     onCompleted: () => {
@@ -17,6 +17,8 @@ const Login = (props) => {
       } else {
         dispatch({ type: ACTION.LOGIN_FAILED, payload: data.login.errors });
       }
+      // This is for websocket to work... it will not work if we don't refresh when we log in
+      window.location.href = "/";
     },
   });
 

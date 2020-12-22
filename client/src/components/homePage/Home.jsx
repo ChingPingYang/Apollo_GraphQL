@@ -1,29 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../util/AuthContext";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { GET_USERS } from "../../queries/query";
+import { MessageContext } from "../../util/MessageContext";
+import { ACTION_MESSAGE } from "../../util/MessageReducer";
+import { useSubscription } from "@apollo/client";
+import { MESSAGE_SENT } from "../../queries/subscription";
+
+import Users from "./Users";
+import Messages from "./Messages";
 
 const Home = () => {
-  // Use "useLazyQuery" to avoid React error:
-  /*Warning: Can't perform a React state update on an unmounted component. This is a
-    no-op, but it indicates a memory leak in your application. To fix, cancel all
-    subscriptions and asynchronous tasks in a useEffect cleanup function. */
-  const [getUsers, { loading, error, data }] = useLazyQuery(GET_USERS);
+  const { state } = useContext(AuthContext);
+  const { messageDispatch } = useContext(MessageContext);
 
-  // Execute "useLazyQuery" in the uesEffect to avoid error.
+  // For receiving websocket message and updating message context.
+  const { data, error } = useSubscription(MESSAGE_SENT);
   useEffect(() => {
-    getUsers(GET_USERS);
-  }, [getUsers]);
+    if (data) {
+      messageDispatch({
+        type: ACTION_MESSAGE.SEND_MESSAGE,
+        payload: data.messageSent,
+      });
+    }
+  }, [data, error]);
 
-  if (loading) return <h1>Fetching data....</h1>;
-  if (error) return <h1>Failed to authorize user</h1>;
-
+  if (!state.user) return <h1>Please log in first.</h1>;
   return (
     <div>
-      <h1>Home</h1>
-      {data?.users.map((user) => (
-        <h1 key={user.id}>{user.username}</h1>
-      ))}
+      <div style={{ display: "flex" }}>
+        <div style={{ border: "solid 1px red", width: "200px" }}>
+          <Users />
+        </div>
+        <Messages />
+      </div>
     </div>
   );
 };

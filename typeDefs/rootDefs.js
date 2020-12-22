@@ -35,6 +35,7 @@ exports.typeDefs = gql`
 
     getMessages(from: ID!): [Message]!
   }
+
   type Mutation {
     register(
       username: String!
@@ -44,5 +45,9 @@ exports.typeDefs = gql`
     ): AuthResponse!
 
     sendMessage(content: String!, to: ID!): Message!
+  }
+
+  type Subscription {
+    messageSent: Message!
   }
 `;

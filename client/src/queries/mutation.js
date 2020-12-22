@@ -26,3 +26,15 @@ export const REGISTER_USER = gql`
     }
   }
 `;
+
+export const SEND_MESSAGE = gql`
+  mutation($content: String!, $to: ID!) {
+    sendMessage(content: $content, to: $to) {
+      id
+      from
+      to
+      content
+      createdAt
+    }
+  }
+`;

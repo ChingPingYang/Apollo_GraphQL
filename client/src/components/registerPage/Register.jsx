@@ -8,9 +8,8 @@ import { REGISTER_USER } from "../../queries/mutation";
 const Register = () => {
   const { dispatch } = useContext(AuthContext);
   const [register, { data, loading }] = useMutation(REGISTER_USER, {
-    update: (cache, { data: { register } }) => {
+    onCompleted: ({ register }) => {
       if (register.ok) {
-        console.log(register);
         dispatch({
           type: ACTION.REGISTER_USER_SUCCESS,
           payload: register.user,
@@ -21,6 +20,8 @@ const Register = () => {
           payload: register.errors,
         });
       }
+      // This is for websocket to work... it will not work if we don't refresh when we register
+      window.location.href = "/";
     },
   });
 

@@ -14,4 +14,8 @@ exports.resolvers = {
     ...user.Mutation,
     ...message.Mutation,
   },
+
+  Subscription: {
+    ...message.Subscription,
+  },
 };

@@ -1,13 +1,19 @@
 const User = require("../models/User");
 const Message = require("../models/Message");
-const { AuthenticationError, UserInputError } = require("apollo-server");
+const {
+  AuthenticationError,
+  UserInputError,
+  withFilter,
+} = require("apollo-server");
 
 module.exports = {
   Query: {
     getMessages: async (_, args, context) => {
       if (!context.token.id)
         throw new AuthenticationError(context.token.message);
+
       const { from } = args;
+
       try {
         const thePerson = await User.findById(from);
         if (!thePerson)
@@ -32,6 +38,7 @@ module.exports = {
       if (!context.token.id) {
         throw new AuthenticationError(context.token.message);
       }
+
       const { content, to } = args;
       // Check if content is empty
       if (content.trim() === "") throw new UserInputError("Content is empty");
@@ -52,11 +59,39 @@ module.exports = {
           to,
         });
         await message.save();
+
+        // Send this message to the subscribed user
+        context.pubsub.publish("MESSAGE_SENT", { messageSent: message });
         return message;
       } catch (err) {
         console.log(err);
         throw err;
       }
+    },
+  },
+
+  Subscription: {
+    messageSent: {
+      subscribe: withFilter(
+        (_, __, context) => {
+          if (!context.token.id) {
+            throw new AuthenticationError(context.token.message);
+          }
+          console.log(context.token);
+
+          return context.pubsub.asyncIterator(["MESSAGE_SENT"]);
+        },
+        (parent, _, context) => {
+          // If the new message's "from" || "to" equals current loged-in user, execute the subscribe function.
+          if (
+            parent.messageSent.from.toString() === context.token.id ||
+            parent.messageSent.to.toString() === context.token.id
+          ) {
+            return true;
+          }
+          return false;
+        }
+      ),
     },
   },
 };

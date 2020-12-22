@@ -36,3 +36,15 @@ export const GET_USERS = gql`
     }
   }
 `;
+
+export const GET_MESSAGES = gql`
+  query($from: ID!) {
+    getMessages(from: $from) {
+      id
+      from
+      to
+      content
+      createdAt
+    }
+  }
+`;
