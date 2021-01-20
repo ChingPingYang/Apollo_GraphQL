@@ -1,5 +1,3 @@
-import { ACTION } from "./AuthReducer";
-
 export const ACTION_MESSAGE = {
   GET_USERS_SUCCESS: "GET_USERS_SUCCESS",
   GET_USERS_FAILED: "GET_USERS_FAILED",
