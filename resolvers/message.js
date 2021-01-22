@@ -77,7 +77,6 @@ module.exports = {
           if (!context.token.id) {
             throw new AuthenticationError(context.token.message);
           }
-          console.log(context.token);
 
           return context.pubsub.asyncIterator(["MESSAGE_SENT"]);
         },

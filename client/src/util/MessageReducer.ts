@@ -1,21 +1,18 @@
-export const ACTION_MESSAGE = {
-  GET_USERS_SUCCESS: "GET_USERS_SUCCESS",
-  GET_USERS_FAILED: "GET_USERS_FAILED",
-  CHANGE_SELECTED_USER: "CHANGE_SELECTED_USER",
-  GET_MESSAGES_SUCCESS: "GET_MESSAGES_SUCCESS",
-  GET_MESSAGES_FAILED: "GET_MESSAGES_FAILED",
-  SEND_MESSAGE: "SEND_MESSAGE",
-};
+import { ACTION_MESSAGE, MessageState, Payload } from "../types/types";
 
-export const initMessage = {
+export const initMessage: MessageState = {
   users: [],
   messages: [],
   selectedUser: null,
-  errors: [],
+  errors: null,
 };
 
-const MessageReducer = (state = initMessage, action) => {
+const MessageReducer = (
+  state = initMessage,
+  action: { type: ACTION_MESSAGE; payload: any }
+): MessageState => {
   const { type, payload } = action;
+
   switch (type) {
     case ACTION_MESSAGE.GET_USERS_SUCCESS:
       return {

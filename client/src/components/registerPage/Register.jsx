@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../util/AuthContext";
-import { ACTION } from "../../util/AuthReducer";
+import { ACTION_AUTH } from "../../types/types";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../queries/mutation";
 
@@ -11,12 +11,12 @@ const Register = () => {
     onCompleted: ({ register }) => {
       if (register.ok) {
         dispatch({
-          type: ACTION.REGISTER_USER_SUCCESS,
+          type: ACTION_AUTH.REGISTER_USER_SUCCESS,
           payload: register.user,
         });
       } else {
         dispatch({
-          type: ACTION.REGISTER_USER_FAILED,
+          type: ACTION_AUTH.REGISTER_USER_FAILED,
           payload: register.errors,
         });
       }

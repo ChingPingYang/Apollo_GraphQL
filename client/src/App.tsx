@@ -7,13 +7,12 @@ import AuthReducer, { initAuth } from "./util/AuthReducer";
 import MessageReducer, { initMessage } from "./util/MessageReducer";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "./queries/query";
-import { ACTION } from "./util/AuthReducer";
+import { ACTION_AUTH } from "./types/types";
 
 import Nav from "./components/Nav";
-import Home from "./components/homePage/Home";
-import Register from "./components/registerPage/Register";
-import Login from "./components/loginPage/Login";
+import routeMap from "./components/routes/routeMap";
 import PublicRoute from "./components/routes/PublicRoute";
+import PrivateRoute from "./components/routes/PrivateRoute";
 
 function App() {
   const [state, dispatch] = useReducer(AuthReducer, initAuth);
@@ -25,11 +24,11 @@ function App() {
   // If there's token in the localstorage, login the user automatically.
   const { loading, error, data } = useQuery(GET_USER, {
     onCompleted: (data) => {
-      dispatch({ type: ACTION.GET_USER_SUCCESS, payload: data.user });
+      dispatch({ type: ACTION_AUTH.GET_USER_SUCCESS, payload: data.user });
     },
     onError: (error) => {
       dispatch({
-        type: ACTION.GET_USER_FAILED,
+        type: ACTION_AUTH.GET_USER_FAILED,
         payload: error.graphQLErrors,
       });
     },
@@ -41,9 +40,13 @@ function App() {
         <Router>
           <Nav />
           <Switch>
-            <PublicRoute path="/" exact component={Home} />
-            <PublicRoute path="/register" restricted component={Register} />
-            <PublicRoute path="/login" restricted component={Login} />
+            {routeMap.map((route, index) =>
+              route.isPrivate ? (
+                <PrivateRoute key={index} {...route} />
+              ) : (
+                <PublicRoute key={index} {...route} />
+              )
+            )}
           </Switch>
         </Router>
       </MessageContext.Provider>
