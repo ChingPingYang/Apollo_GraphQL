@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../util/AuthContext";
-import { ACTION } from "../util/AuthReducer";
+import { ACTION_AUTH } from "../types/types";
 
 const Nav = () => {
   const { dispatch } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const Nav = () => {
         <Link to="/login">Login</Link>
         <button
           onClick={() => {
-            dispatch({ type: ACTION.LOGOUT, payload: [] });
+            dispatch({ type: ACTION_AUTH.LOGOUT, payload: [] });
             window.location.href = "/login";
           }}
         >

@@ -1,11 +1,24 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../util/AuthContext";
 import { Route, Redirect } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
-const PublicRoute = ({ component: Component, restricted, ...rest }) => {
+interface PublicRouteProps {
+  component: React.FC<any>;
+  path: string;
+  restricted?: boolean;
+  exact?: boolean;
+  isPrivate: boolean;
+}
+
+const PublicRoute: React.FC<PublicRouteProps> = ({
+  component: Component,
+  restricted,
+  ...rest
+}) => {
   const {
     state: { loading, authorized },
-  } = useContext(AuthContext);
+  } = useContext<any>(AuthContext);
 
   if (loading) return <h1>Laoding!!!!!</h1>;
 

@@ -1,13 +1,4 @@
-export const ACTION = {
-  GET_USER_SUCCESS: "GET_USER_SUCCESS",
-  GET_USER_FAILED: "GET_USER_FAILED",
-  REGISTER_USER_SUCCESS: "REGISTER_USER_SUCCESS",
-  REGISTER_USER_FAILED: "REGISTER_USER_FAILED",
-  LOGIN_SUCCESS: "LOGIN_SUCCESS",
-  LOGIN_FAILED: "LOGIN_FAILED",
-  LOGOUT: "LOGOUT",
-};
-
+import { ACTION_AUTH, Payload } from "../types/types";
 export const initAuth = {
   loading: true,
   authorized: false,
@@ -15,10 +6,10 @@ export const initAuth = {
   errors: [],
 };
 
-const AuthReducer = (state = initAuth, action) => {
+const AuthReducer = (state: any = initAuth, action: any) => {
   const { type, payload } = action;
   switch (type) {
-    case ACTION.GET_USER_SUCCESS:
+    case ACTION_AUTH.GET_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -27,8 +18,8 @@ const AuthReducer = (state = initAuth, action) => {
         errors: [],
       };
 
-    case ACTION.REGISTER_USER_SUCCESS:
-    case ACTION.LOGIN_SUCCESS:
+    case ACTION_AUTH.REGISTER_USER_SUCCESS:
+    case ACTION_AUTH.LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {
         ...state,
@@ -38,10 +29,10 @@ const AuthReducer = (state = initAuth, action) => {
         errors: [],
       };
 
-    case ACTION.GET_USER_FAILED:
-    case ACTION.REGISTER_USER_FAILED:
-    case ACTION.LOGIN_FAILED:
-    case ACTION.LOGOUT:
+    case ACTION_AUTH.GET_USER_FAILED:
+    case ACTION_AUTH.REGISTER_USER_FAILED:
+    case ACTION_AUTH.LOGIN_FAILED:
+    case ACTION_AUTH.LOGOUT:
       localStorage.removeItem("token");
       return {
         ...state,

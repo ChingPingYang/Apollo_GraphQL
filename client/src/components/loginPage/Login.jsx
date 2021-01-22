@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../util/AuthContext";
-import { ACTION } from "../../util/AuthReducer";
+import { ACTION_AUTH } from "../../types/types";
 import { Link } from "react-router-dom";
 import { useLazyQuery } from "@apollo/client";
 import { LOGIN_USER } from "../../queries/query";
@@ -11,11 +11,13 @@ const Login = (props) => {
   // GraphQL Query
   const [login, { loading, data }] = useLazyQuery(LOGIN_USER, {
     onCompleted: () => {
-      console.log("completed!");
       if (data.login.ok && data.login.user.token) {
-        dispatch({ type: ACTION.LOGIN_SUCCESS, payload: data.login.user });
+        dispatch({ type: ACTION_AUTH.LOGIN_SUCCESS, payload: data.login.user });
       } else {
-        dispatch({ type: ACTION.LOGIN_FAILED, payload: data.login.errors });
+        dispatch({
+          type: ACTION_AUTH.LOGIN_FAILED,
+          payload: data.login.errors,
+        });
       }
       // This is for websocket to work... it will not work if we don't refresh when we log in
       window.location.href = "/";

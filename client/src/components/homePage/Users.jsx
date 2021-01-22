@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { MessageContext } from "../../util/MessageContext";
-import { ACTION_MESSAGE } from "../../util/MessageReducer";
+import { ACTION_MESSAGE } from "../../types/types";
 
 import { useLazyQuery } from "@apollo/client";
 import { GET_USERS, GET_MESSAGES } from "../../queries/query";
@@ -20,6 +20,7 @@ const Users = () => {
       });
     },
     onError: (error) => {
+      console.log(error.graphQLErrors);
       messageDispatch({
         type: ACTION_MESSAGE.GET_USERS_FAILED,
         payload: error.graphQLErrors,

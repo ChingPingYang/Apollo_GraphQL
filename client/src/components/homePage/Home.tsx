@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../util/AuthContext";
 import { MessageContext } from "../../util/MessageContext";
-import { ACTION_MESSAGE } from "../../util/MessageReducer";
+import { ACTION_MESSAGE } from "../../types/types";
 import { useSubscription } from "@apollo/client";
 import { MESSAGE_SENT } from "../../queries/subscription";
 
 import Users from "./Users";
 import Messages from "./Messages";
 
-const Home = () => {
+const Home: React.FC<any> = () => {
   const { state } = useContext(AuthContext);
-  const { messageDispatch } = useContext(MessageContext);
+  const { messageDispatch } = useContext<any>(MessageContext);
 
   // For receiving websocket message and updating message context.
   const { data, error } = useSubscription(MESSAGE_SENT);
