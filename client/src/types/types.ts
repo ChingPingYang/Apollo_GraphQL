@@ -10,11 +10,11 @@ export interface Route {
 export type Payload<T> =
   | {
       type: ACTION_AUTH;
-      payload: T;
+      payload: T | any;
     }
   | {
       type: ACTION_MESSAGE;
-      payload: T;
+      payload: T | any;
     };
 
 /* Auth types*/
@@ -26,6 +26,18 @@ export enum ACTION_AUTH {
   LOGIN_SUCCESS = "LOGIN_SUCCESS",
   LOGIN_FAILED = "LOGIN_FAILED",
   LOGOUT = "LOGOUT",
+}
+
+export interface AuthState {
+  loading: boolean;
+  authorized: boolean;
+  user: User | null;
+  errors: any;
+}
+
+export interface AuthContextProps {
+  state: AuthState;
+  dispatch: <T>(action: Payload<T>) => void;
 }
 
 /* Message types*/
@@ -59,8 +71,5 @@ export type MessageState = {
 
 export type MessageContextProps = {
   messageState: MessageState;
-  messageDispatch: <T>(action: {
-    type: ACTION_MESSAGE;
-    payload: Payload<T>;
-  }) => void;
+  messageDispatch: <T>(action: any) => void;
 };

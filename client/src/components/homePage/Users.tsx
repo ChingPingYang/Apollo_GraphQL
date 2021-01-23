@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { MessageContext } from "../../util/MessageContext";
 import { ACTION_MESSAGE } from "../../types/types";
+import { UserType } from "../../types/graphQLTypes";
 
 import { useLazyQuery } from "@apollo/client";
 import { GET_USERS, GET_MESSAGES } from "../../queries/query";
@@ -12,8 +13,8 @@ const Users = () => {
   /*Warning: Can't perform a React state update on an unmounted component. This is a
     no-op, but it indicates a memory leak in your application. To fix, cancel all
     subscriptions and asynchronous tasks in a useEffect cleanup function. */
-  const [getUsers, { loading, error, data }] = useLazyQuery(GET_USERS, {
-    onCompleted: (data) => {
+  const [getUsers, { data, loading }] = useLazyQuery(GET_USERS, {
+    onCompleted: () => {
       messageDispatch({
         type: ACTION_MESSAGE.GET_USERS_SUCCESS,
         payload: data.users,
@@ -30,14 +31,14 @@ const Users = () => {
 
   // Execute "useLazyQuery" in the uesEffect to avoid error.
   useEffect(() => {
-    getUsers(GET_USERS);
+    getUsers();
   }, [getUsers]);
 
-  const [getMessages, _] = useLazyQuery(GET_MESSAGES, {
-    onCompleted: (data) => {
+  const [getMessages, { data: messageData }] = useLazyQuery(GET_MESSAGES, {
+    onCompleted: () => {
       messageDispatch({
         type: ACTION_MESSAGE.GET_MESSAGES_SUCCESS,
-        payload: data.getMessages,
+        payload: messageData.getMessages,
       });
     },
     onError: (error) => {
@@ -49,7 +50,7 @@ const Users = () => {
     fetchPolicy: "no-cache",
   });
 
-  const handleSelectUser = (userId) => {
+  const handleSelectUser = (userId: string | null) => {
     messageDispatch({
       type: ACTION_MESSAGE.CHANGE_SELECTED_USER,
       payload: userId,
@@ -60,6 +61,7 @@ const Users = () => {
     if (messageState.selectedUser) {
       getMessages({ variables: { from: messageState.selectedUser } });
     }
+    console.log(messageState.selectedUser);
   }, [messageState.selectedUser]);
 
   if (loading) return <h1>Loading users...</h1>;

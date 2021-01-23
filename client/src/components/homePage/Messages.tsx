@@ -1,28 +1,25 @@
 import React, { useContext, useState } from "react";
 import { MessageContext } from "../../util/MessageContext";
-import { SEND_MESSAGE } from "../../queries/mutation";
-import { useMutation } from "@apollo/client";
+import useSendMessage from "../../hooks/useSendMessage";
 
 import Message from "./Message";
 
 export default function Messages() {
   const { messageState } = useContext(MessageContext);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>("");
 
-  const [sendMessage] = useMutation(SEND_MESSAGE, {
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { sendMessage } = useSendMessage();
 
-  const handleSubmit = (e, userId) => {
+  const handleSubmit = (e: React.SyntheticEvent, userId: string | null) => {
     e.preventDefault();
     if (message.trim() !== "" && messageState.selectedUser) {
       sendMessage({ variables: { content: message, to: userId } });
       setMessage("");
     }
   };
+
   if (!messageState.selectedUser) return <h1>Choose a person chat.</h1>;
+
   return (
     <div>
       <div

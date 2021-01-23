@@ -1,4 +1,4 @@
-import { ACTION_MESSAGE, MessageState, Payload } from "../types/types";
+import { ACTION_MESSAGE, MessageState } from "../types/types";
 
 export const initMessage: MessageState = {
   users: [],
