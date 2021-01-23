@@ -1,29 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../util/AuthContext";
-import { ACTION_AUTH } from "../../types/types";
-import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../../queries/mutation";
+import useRegister from "../../hooks/useRegister";
 
 const Register = () => {
-  const { dispatch } = useContext(AuthContext);
-  const [register, { data, loading }] = useMutation(REGISTER_USER, {
-    onCompleted: ({ register }) => {
-      if (register.ok) {
-        dispatch({
-          type: ACTION_AUTH.REGISTER_USER_SUCCESS,
-          payload: register.user,
-        });
-      } else {
-        dispatch({
-          type: ACTION_AUTH.REGISTER_USER_FAILED,
-          payload: register.errors,
-        });
-      }
-      // This is for websocket to work... it will not work if we don't refresh when we register
-      window.location.href = "/";
-    },
-  });
+  const { register, data, loading } = useRegister();
 
   const [credential, setCredential] = useState({
     username: "",

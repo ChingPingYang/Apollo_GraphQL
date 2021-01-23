@@ -6,7 +6,7 @@ export const initAuth = {
   errors: [],
 };
 
-const AuthReducer = (state: any = initAuth, action: any) => {
+const AuthReducer = <T extends any>(state = initAuth, action: Payload<T>) => {
   const { type, payload } = action;
   switch (type) {
     case ACTION_AUTH.GET_USER_SUCCESS:

@@ -8,9 +8,9 @@ import { MESSAGE_SENT } from "../../queries/subscription";
 import Users from "./Users";
 import Messages from "./Messages";
 
-const Home: React.FC<any> = () => {
+const Home: React.FC = () => {
   const { state } = useContext(AuthContext);
-  const { messageDispatch } = useContext<any>(MessageContext);
+  const { messageDispatch } = useContext(MessageContext);
 
   // For receiving websocket message and updating message context.
   const { data, error } = useSubscription(MESSAGE_SENT);

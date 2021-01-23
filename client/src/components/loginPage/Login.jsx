@@ -1,29 +1,11 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../util/AuthContext";
-import { ACTION_AUTH } from "../../types/types";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLazyQuery } from "@apollo/client";
-import { LOGIN_USER } from "../../queries/query";
+import useLogin from "../../hooks/useLogin";
 
-const Login = (props) => {
-  // Global State
-  const { dispatch } = useContext(AuthContext);
-  // GraphQL Query
-  const [login, { loading, data }] = useLazyQuery(LOGIN_USER, {
-    onCompleted: () => {
-      if (data.login.ok && data.login.user.token) {
-        dispatch({ type: ACTION_AUTH.LOGIN_SUCCESS, payload: data.login.user });
-      } else {
-        dispatch({
-          type: ACTION_AUTH.LOGIN_FAILED,
-          payload: data.login.errors,
-        });
-      }
-      // This is for websocket to work... it will not work if we don't refresh when we log in
-      window.location.href = "/";
-    },
-  });
+const Login = () => {
+  const { login, loading, data } = useLogin();
 
+  React.useEffect(() => {});
   const [credential, setCredential] = useState({
     username: "",
     password: "",
