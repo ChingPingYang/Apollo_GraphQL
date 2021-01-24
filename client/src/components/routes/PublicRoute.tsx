@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../util/AuthContext";
 import { Route, Redirect } from "react-router-dom";
-import { RouteComponentProps } from "react-router-dom";
 
 interface PublicRouteProps {
   component: React.FC<any>;

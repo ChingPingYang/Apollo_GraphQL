@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { MessageContext } from "../../util/MessageContext";
 import { ACTION_MESSAGE } from "../../types/types";
-import { UserType } from "../../types/graphQLTypes";
 
 import { useLazyQuery } from "@apollo/client";
 import { GET_USERS, GET_MESSAGES } from "../../queries/query";
