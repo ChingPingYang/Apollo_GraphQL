@@ -1,4 +1,4 @@
-import { ACTION_MESSAGE, MessageState } from "../types/types";
+import { ACTION_MESSAGE, MessageState, Payload } from "../types/types";
 
 export const initMessage: MessageState = {
   users: [],
@@ -7,9 +7,9 @@ export const initMessage: MessageState = {
   errors: null,
 };
 
-const MessageReducer = (
+const MessageReducer = <T>(
   state = initMessage,
-  action: { type: ACTION_MESSAGE; payload: any }
+  action: Payload<T>
 ): MessageState => {
   const { type, payload } = action;
 
