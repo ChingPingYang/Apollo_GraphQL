@@ -58,7 +58,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const ApolloProvider = (props) => {
+interface ApolloProviderProps {
+  children: React.ReactNode;
+}
+
+const ApolloProvider: React.FC<ApolloProviderProps> = (props) => {
   return (
     <Provider client={client} {...props}>
       {props.children}
