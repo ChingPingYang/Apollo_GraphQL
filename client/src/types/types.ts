@@ -71,5 +71,5 @@ export type MessageState = {
 
 export type MessageContextProps = {
   messageState: MessageState;
-  messageDispatch: <T>(action: any) => void;
+  messageDispatch: <T>(action: Payload<T>) => void;
 };

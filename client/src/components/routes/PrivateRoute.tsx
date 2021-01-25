@@ -2,7 +2,18 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../util/AuthContext";
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+interface PrvateRouteProps {
+  component: React.FC<any>;
+  path: string;
+  restricted?: boolean;
+  exact?: boolean;
+  isPrivate: boolean;
+}
+
+const PrivateRoute: React.FC<PrvateRouteProps> = ({
+  component: Component,
+  ...rest
+}) => {
   const {
     state: { loading, authorized },
   } = useContext(AuthContext);

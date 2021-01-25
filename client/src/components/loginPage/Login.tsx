@@ -10,10 +10,10 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const handleOnchange = (e) => {
+  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredential({ ...credential, [e.target.id]: e.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     login({ variables: { ...credential } });
   };
@@ -52,7 +52,7 @@ const Login = () => {
         </div>
       </form>
       {data?.login.errors.length > 0 &&
-        data.login.errors.map((error, index) => (
+        data.login.errors.map((error: any, index: number) => (
           <h1 key={index}>{error.message}</h1>
         ))}
     </>

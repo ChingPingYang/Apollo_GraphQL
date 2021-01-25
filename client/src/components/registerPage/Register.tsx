@@ -11,10 +11,10 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
-  const handleOnchange = (e) => {
+  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredential({ ...credential, [e.target.id]: e.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     register({ variables: { ...credential } });
   };
@@ -69,7 +69,7 @@ const Register = () => {
       </form>
       {loading ? <h1>Loading</h1> : <h1>Done</h1>}
       {data?.register.errors.length > 0 &&
-        data.register.errors.map((error, index) => (
+        data.register.errors.map((error: any, index: number) => (
           <h1 key={index}>{error.message}</h1>
         ))}
     </>
