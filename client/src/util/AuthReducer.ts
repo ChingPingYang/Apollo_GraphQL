@@ -6,7 +6,7 @@ export const initAuth = {
   errors: [],
 };
 
-const AuthReducer = <T extends any>(state = initAuth, action: Payload<T>) => {
+const AuthReducer = <T>(state = initAuth, action: Payload<T>) => {
   const { type, payload } = action;
   console.log(action);
   switch (type) {
@@ -21,7 +21,7 @@ const AuthReducer = <T extends any>(state = initAuth, action: Payload<T>) => {
 
     case ACTION_AUTH.REGISTER_USER_SUCCESS:
     case ACTION_AUTH.LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.token);
+      localStorage.setItem("token", JSON.stringify(payload.token));
       return {
         ...state,
         loading: false,
