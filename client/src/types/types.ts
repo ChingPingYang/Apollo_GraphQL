@@ -72,8 +72,4 @@ export type MessageState = {
 export interface MessageContextProps {
   messageState: MessageState;
   messageDispatch: <T>(action: Payload<T>) => void;
-<<<<<<< HEAD
-};
-=======
 }
->>>>>>> 3ac187a609139ac02adffdbe6f1b5d5980ac338b
