@@ -69,7 +69,7 @@ export type MessageState = {
   errors: any;
 };
 
-export type MessageContextProps = {
+export interface MessageContextProps {
   messageState: MessageState;
   messageDispatch: <T>(action: Payload<T>) => void;
-};
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useRegister from "../../hooks/useRegister";
+import { Button } from "@material-ui/core";
 
 const Register = () => {
   const { register, data, loading } = useRegister();
@@ -60,7 +61,7 @@ const Register = () => {
             />
           </div>
         </div>
-        <button type="submit">submit</button>
+        <Button type="submit">submit</Button>
         <div>
           <small>
             Have an account?<Link to="/login">Login</Link>

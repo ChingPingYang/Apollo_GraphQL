@@ -1,28 +1,76 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
 import { AuthContext } from "../util/AuthContext";
 import { ACTION_AUTH } from "../types/types";
+import clsx from "clsx";
 
-const Nav = () => {
-  const { dispatch } = useContext(AuthContext);
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  makeStyles,
+  Link as MUILink,
+} from "@material-ui/core";
+
+const useStyle = makeStyles({
+  selectedStyle: {
+    color: "red",
+    textDecoration: "underline",
+  },
+});
+
+const menuItems = [
+  { id: 0, name: "home", path: "/" },
+  { id: 1, name: "Register", path: "/register" },
+  { id: 2, name: "Login", path: "/login" },
+];
+
+const getInitSelect = (pathname: string): number => {
+  const selected = menuItems.find((item) => item.path === pathname)!;
+  return selected.id;
+};
+
+const Nav: React.FC<{ location: any }> = ({ location: { pathname } }) => {
+  const classes = useStyle();
+  const { state, dispatch } = React.useContext(AuthContext);
+  const [selected, setSelected] = React.useState(getInitSelect(pathname));
+
+  const handleOnclick = (id: number) => {
+    setSelected(id);
+  };
 
   return (
-    <div>
-      <ul>
-        <Link to="/">Home</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/login">Login</Link>
-        <button
-          onClick={() => {
-            dispatch({ type: ACTION_AUTH.LOGOUT, payload: [] });
-            window.location.href = "/login";
-          }}
-        >
-          Logout
-        </button>
-      </ul>
-    </div>
+    <AppBar position="static" color="default">
+      <Toolbar style={{ justifyContent: "space-around" }}>
+        {!state.authorized ? (
+          <>
+            {menuItems.map((item) => (
+              <MUILink
+                key={item.id}
+                component={Link}
+                to={item.path}
+                onClick={() => handleOnclick(item.id)}
+                className={clsx({
+                  [classes.selectedStyle]: selected === item.id,
+                })}
+              >
+                {item.name}
+              </MUILink>
+            ))}
+          </>
+        ) : (
+          <Button
+            onClick={() => {
+              dispatch({ type: ACTION_AUTH.LOGOUT, payload: [] });
+              window.location.href = "/login";
+            }}
+          >
+            Logout
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
-export default Nav;
+export default withRouter(Nav);
