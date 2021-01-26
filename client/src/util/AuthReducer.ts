@@ -8,6 +8,7 @@ export const initAuth = {
 
 const AuthReducer = <T extends any>(state = initAuth, action: Payload<T>) => {
   const { type, payload } = action;
+  console.log(action);
   switch (type) {
     case ACTION_AUTH.GET_USER_SUCCESS:
       return {
