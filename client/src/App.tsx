@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 import { GET_USER } from "./queries/query";
 import { ACTION_AUTH } from "./types/types";
 
-import Nav from "./components/Nav";
+import Nav from "./components/navbar/Nav";
 import routeMap from "./components/routes/routeMap";
 import PublicRoute from "./components/routes/PublicRoute";
 import PrivateRoute from "./components/routes/PrivateRoute";

@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import { AuthContext } from "../util/AuthContext";
-import { ACTION_AUTH } from "../types/types";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import { AuthContext } from "../../util/AuthContext";
+import { ACTION_AUTH } from "../../types/types";
 import clsx from "clsx";
 
 import {
@@ -13,9 +13,12 @@ import {
 } from "@material-ui/core";
 
 const useStyle = makeStyles({
-  selectedStyle: {
-    color: "red",
-    textDecoration: "underline",
+  selectedStyle: (props) => {
+    console.log(props);
+    return {
+      color: props ? "red" : "blue",
+      textDecoration: "underline",
+    };
   },
 });
 
@@ -30,7 +33,7 @@ const getInitSelect = (pathname: string): number => {
   return selected.id;
 };
 
-const Nav: React.FC<{ location: any }> = ({ location: { pathname } }) => {
+const Nav: React.FC<RouteComponentProps> = ({ location: { pathname } }) => {
   const classes = useStyle();
   const { state, dispatch } = React.useContext(AuthContext);
   const [selected, setSelected] = React.useState(getInitSelect(pathname));
@@ -64,6 +67,7 @@ const Nav: React.FC<{ location: any }> = ({ location: { pathname } }) => {
               dispatch({ type: ACTION_AUTH.LOGOUT, payload: [] });
               window.location.href = "/login";
             }}
+            variant="text"
           >
             Logout
           </Button>
