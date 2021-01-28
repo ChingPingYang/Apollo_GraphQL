@@ -17,6 +17,12 @@ export type Payload<T> =
       payload: T | any;
     };
 
+export interface MenuItem {
+  id: number;
+  name: string;
+  path: string;
+}
+
 /* Auth types*/
 export enum ACTION_AUTH {
   GET_USER_SUCCESS = "GET_USER_SUCCESS",

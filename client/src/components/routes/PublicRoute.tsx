@@ -18,7 +18,7 @@ const PublicRoute: React.FC<PublicRouteProps> = ({
 }) => {
   const {
     state: { loading, authorized },
-  } = useContext<any>(AuthContext);
+  } = useContext(AuthContext);
 
   if (loading) return <h1>Laoding!!!!!</h1>;
 
