@@ -14,7 +14,6 @@ import {
 
 const useStyle = makeStyles({
   selectedStyle: (props) => {
-    console.log(props);
     return {
       color: props ? "red" : "blue",
       textDecoration: "underline",
@@ -33,14 +32,14 @@ const getInitSelect = (pathname: string): number => {
   return selected.id;
 };
 
-const Nav: React.FC<RouteComponentProps> = ({ location: { pathname } }) => {
+const Nav: React.FC<any> = ({ selected, handleIDChange, state, logout }) => {
   const classes = useStyle();
-  const { state, dispatch } = React.useContext(AuthContext);
-  const [selected, setSelected] = React.useState(getInitSelect(pathname));
+  // const { state, dispatch } = React.useContext(AuthContext);
+  // const [selected, setSelected] = React.useState(getInitSelect(pathname));
 
-  const handleOnclick = (id: number) => {
-    setSelected(id);
-  };
+  // const handleOnclick = (id: number) => {
+  //   setSelected(id);
+  // };
 
   return (
     <AppBar position="static" color="default">
@@ -52,7 +51,7 @@ const Nav: React.FC<RouteComponentProps> = ({ location: { pathname } }) => {
                 key={item.id}
                 component={Link}
                 to={item.path}
-                onClick={() => handleOnclick(item.id)}
+                onClick={() => handleIDChange(item.id)}
                 className={clsx({
                   [classes.selectedStyle]: selected === item.id,
                 })}
@@ -62,13 +61,7 @@ const Nav: React.FC<RouteComponentProps> = ({ location: { pathname } }) => {
             ))}
           </>
         ) : (
-          <Button
-            onClick={() => {
-              dispatch({ type: ACTION_AUTH.LOGOUT, payload: [] });
-              window.location.href = "/login";
-            }}
-            variant="text"
-          >
+          <Button onClick={logout} variant="text">
             Logout
           </Button>
         )}
