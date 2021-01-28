@@ -19,7 +19,6 @@ const NavContainer: React.FC<RouteComponentProps> = ({
   location: { pathname },
 }) => {
   const { state } = React.useContext(AuthContext);
-  console.log("HERE:", state);
 
   const [selected, setSelected] = React.useState(getInitSelect(pathname));
   const handleIDChange = (id: number) => {
@@ -30,6 +29,7 @@ const NavContainer: React.FC<RouteComponentProps> = ({
 
   return (
     <Nav
+      menuItems={menuItems}
       selected={selected}
       handleIDChange={handleIDChange}
       state={state}

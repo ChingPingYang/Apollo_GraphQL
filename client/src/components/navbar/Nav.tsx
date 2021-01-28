@@ -1,9 +1,7 @@
 import React from "react";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
-import { AuthContext } from "../../util/AuthContext";
-import { ACTION_AUTH } from "../../types/types";
+import { MenuItem, AuthState } from "../../types/types";
 import clsx from "clsx";
-
 import {
   AppBar,
   Toolbar,
@@ -21,51 +19,50 @@ const useStyle = makeStyles({
   },
 });
 
-const menuItems = [
-  { id: 0, name: "home", path: "/" },
-  { id: 1, name: "Register", path: "/register" },
-  { id: 2, name: "Login", path: "/login" },
-];
+interface NavProps extends RouteComponentProps {
+  menuItems: MenuItem[];
+  selected: number;
+  handleIDChange: (id: number) => void;
+  state: AuthState;
+  logout: () => void;
+}
 
-const getInitSelect = (pathname: string): number => {
-  const selected = menuItems.find((item) => item.path === pathname)!;
-  return selected.id;
-};
-
-const Nav: React.FC<any> = ({ selected, handleIDChange, state, logout }) => {
+const Nav: React.FC<NavProps> = ({
+  menuItems,
+  selected,
+  handleIDChange,
+  state,
+  logout,
+}) => {
   const classes = useStyle();
-  // const { state, dispatch } = React.useContext(AuthContext);
-  // const [selected, setSelected] = React.useState(getInitSelect(pathname));
-
-  // const handleOnclick = (id: number) => {
-  //   setSelected(id);
-  // };
 
   return (
     <AppBar position="static" color="default">
-      <Toolbar style={{ justifyContent: "space-around" }}>
-        {!state.authorized ? (
-          <>
-            {menuItems.map((item) => (
-              <MUILink
-                key={item.id}
-                component={Link}
-                to={item.path}
-                onClick={() => handleIDChange(item.id)}
-                className={clsx({
-                  [classes.selectedStyle]: selected === item.id,
-                })}
-              >
-                {item.name}
-              </MUILink>
-            ))}
-          </>
-        ) : (
-          <Button onClick={logout} variant="text">
-            Logout
-          </Button>
-        )}
-      </Toolbar>
+      {!state.loading && (
+        <Toolbar style={{ justifyContent: "space-around" }}>
+          {!state.authorized ? (
+            <>
+              {menuItems.map((item: any) => (
+                <MUILink
+                  key={item.id}
+                  component={Link}
+                  to={item.path}
+                  onClick={() => handleIDChange(item.id)}
+                  className={clsx({
+                    [classes.selectedStyle]: selected === item.id,
+                  })}
+                >
+                  {item.name}
+                </MUILink>
+              ))}
+            </>
+          ) : (
+            <Button onClick={logout} variant="text">
+              Logout
+            </Button>
+          )}
+        </Toolbar>
+      )}
     </AppBar>
   );
 };
