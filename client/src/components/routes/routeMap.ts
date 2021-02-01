@@ -1,7 +1,7 @@
 import { Route } from "../../types/types";
 import Home from "../homePage/Home";
 import Register from "../registerPage/Register";
-import Login from "../loginPage/Login";
+import Login from "../loginPage/LoginContainer";
 
 const routesMap: Route[] = [
   {
