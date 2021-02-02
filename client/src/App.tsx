@@ -22,7 +22,7 @@ function App() {
   );
 
   // If there's token in the localstorage, login the user automatically.
-  const { loading, error, data } = useQuery(GET_USER, {
+  useQuery(GET_USER, {
     onCompleted: (data) => {
       dispatch({ type: ACTION_AUTH.GET_USER_SUCCESS, payload: data.user });
     },

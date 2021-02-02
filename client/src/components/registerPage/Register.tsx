@@ -1,24 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import useRegister from "../../hooks/useRegister";
 import { Button } from "@material-ui/core";
 
-const Register = () => {
-  const { register, data, loading } = useRegister();
+interface RegisterProps {
+  credential: {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+  handleOnchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  data: any;
+  loading: boolean;
+}
 
-  const [credential, setCredential] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCredential({ ...credential, [e.target.id]: e.target.value });
-  };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    register({ variables: { ...credential } });
-  };
+const Register: React.FC<RegisterProps> = ({
+  credential,
+  handleOnchange,
+  handleSubmit,
+  data,
+  loading,
+}) => {
   return (
     <>
       <form onSubmit={handleSubmit}>

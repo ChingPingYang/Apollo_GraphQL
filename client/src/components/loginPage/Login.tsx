@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import useLogin from "../../hooks/useLogin";
 
-const Login = () => {
-  const { login, loading, data } = useLogin();
-
-  React.useEffect(() => {});
-  const [credential, setCredential] = useState({
-    username: "",
-    password: "",
-  });
-  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCredential({ ...credential, [e.target.id]: e.target.value });
+interface LoginProps {
+  credential: {
+    username: string;
+    password: string;
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login({ variables: { ...credential } });
-  };
+  handleOnchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  loading: boolean;
+  data: any;
+}
 
+const Login: React.FC<LoginProps> = ({
+  credential,
+  handleOnchange,
+  handleSubmit,
+  loading,
+  data,
+}) => {
   if (loading) return <h1>Loading</h1>;
 
   return (
