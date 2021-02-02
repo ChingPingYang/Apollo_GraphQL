@@ -1,6 +1,6 @@
 import { Route } from "../../types/types";
 import Home from "../homePage/Home";
-import Register from "../registerPage/Register";
+import Register from "../registerPage/RegisterContainer";
 import Login from "../loginPage/LoginContainer";
 
 const routesMap: Route[] = [
