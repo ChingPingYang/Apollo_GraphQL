@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import useRegister from "../../hooks/useRegister";
 import { Button } from "@material-ui/core";
 
 interface RegisterProps {
@@ -23,21 +22,6 @@ const Register: React.FC<RegisterProps> = ({
   data,
   loading,
 }) => {
-  // const { register, data, loading } = useRegister();
-
-  // const [credential, setCredential] = useState({
-  //   username: "",
-  //   email: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-  // const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCredential({ ...credential, [e.target.id]: e.target.value });
-  // };
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   register({ variables: { ...credential } });
-  // };
   return (
     <>
       <form onSubmit={handleSubmit}>
