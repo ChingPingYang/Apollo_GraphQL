@@ -12,11 +12,12 @@ const RegisterContainer = () => {
     confirmPassword: "",
   });
   const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCredential({ ...credential, [e.target.id]: e.target.value });
+    setCredential({ ...credential, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register({ variables: { ...credential } });
+    console.log(credential);
+    // register({ variables: { ...credential } });
   };
   return (
     <Register

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Box, Grid, makeStyles, Typography } from "@material-ui/core";
+import Input from "../share-components/Input";
 
 interface RegisterProps {
   credential: {
@@ -22,62 +23,84 @@ const Register: React.FC<RegisterProps> = ({
   data,
   loading,
 }) => {
+  const classes = useStyle();
+
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <h1>Register</h1>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
+    <Box className={classes.root}>
+      <form className={classes.form} onSubmit={handleSubmit} autoComplete="off">
+        <Grid container direction="column" justify="center" spacing={2}>
+          <Grid item>
+            <Input
+              name="username"
               type="text"
+              label="Username"
+              variant="outlined"
               onChange={handleOnchange}
               value={credential.username}
             />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
+          </Grid>
+          <Grid item>
+            <Input
+              name="email"
               type="email"
+              label="Email"
+              variant="outlined"
               onChange={handleOnchange}
               value={credential.email}
             />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
+          </Grid>
+          <Grid item>
+            <Input
+              name="password"
               type="password"
+              label="Password"
+              variant="outlined"
               onChange={handleOnchange}
               value={credential.password}
             />
-          </div>
-          <div>
-            <label htmlFor="confirmPassword">ConfirmPassword</label>
-            <input
-              id="confirmPassword"
+          </Grid>
+          <Grid item>
+            <Input
+              name="confirmPassword"
               type="password"
+              label="Confirm Password"
+              variant="outlined"
               onChange={handleOnchange}
               value={credential.confirmPassword}
             />
-          </div>
-        </div>
-        <Button type="submit">submit</Button>
-        <div>
-          <small>
-            Have an account?<Link to="/login">Login</Link>
-          </small>
-        </div>
+          </Grid>
+        </Grid>
+        <Typography variant="caption" display="block" color="textSecondary">
+          Already have an account? <Link to="/login">login</Link>
+        </Typography>
+        <Button type="submit" variant="contained" color="primary">
+          submit
+        </Button>
       </form>
-      {loading ? <h1>Loading</h1> : <h1>Done</h1>}
+      {loading && <h1>Loading</h1>}
       {data?.register.errors.length > 0 &&
         data.register.errors.map((error: any, index: number) => (
           <h1 key={index}>{error.message}</h1>
         ))}
-    </>
+    </Box>
   );
 };
+
+const useStyle = makeStyles((theme) => ({
+  root: {
+    padding: "100px 0px",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  },
+  form: {
+    position: "relative",
+    display: "block",
+    width: "700px",
+    height: "50%",
+    padding: "50px",
+    backgroundColor: "white",
+  },
+}));
 
 export default Register;

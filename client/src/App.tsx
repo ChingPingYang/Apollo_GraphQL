@@ -1,4 +1,3 @@
-import "./App.css";
 import { useReducer } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { AuthContext } from "./util/AuthContext";
