@@ -25,6 +25,10 @@ const NavContainer: React.FC<RouteComponentProps> = ({
     setSelected(id);
   };
 
+  // For link from internal page
+  React.useEffect(() => {
+    setSelected(getInitSelect(pathname));
+  }, [pathname]);
   const { logout } = useLogout();
 
   return (

@@ -10,13 +10,15 @@ import {
   Link as MUILink,
 } from "@material-ui/core";
 
-const useStyle = makeStyles({
-  selectedStyle: (props) => {
-    return {
-      color: props ? "red" : "blue",
-      textDecoration: "underline",
-    };
-  },
+const useStyle = makeStyles((theme) => {
+  return {
+    selectedStyle: () => {
+      return {
+        color: theme.palette.primary.main,
+        textDecoration: "underline",
+      };
+    },
+  };
 });
 
 interface NavProps extends RouteComponentProps {
@@ -46,6 +48,7 @@ const Nav: React.FC<NavProps> = ({
                 <MUILink
                   key={item.id}
                   component={Link}
+                  color="textSecondary"
                   to={item.path}
                   onClick={() => handleIDChange(item.id)}
                   className={clsx({
