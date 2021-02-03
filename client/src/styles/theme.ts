@@ -29,18 +29,6 @@ theme.props = {
 };
 
 theme.overrides = {
-  MuiInputBase: {
-    formControl: {
-      borderColor: "red",
-    },
-  },
-  MuiInput: {
-    root: {
-      "&$hover": {
-        border: "solid 1px red",
-      },
-    },
-  },
   MuiButton: {
     root: {
       borderRadius: "0px",

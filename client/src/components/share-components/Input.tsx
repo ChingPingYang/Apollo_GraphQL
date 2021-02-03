@@ -44,6 +44,7 @@ const useStyle = makeStyles((theme) => ({
       borderColor: "orange",
     },
   },
+  // This is needed
   notchedOutline: {},
 }));
 
