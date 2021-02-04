@@ -73,6 +73,7 @@ const Register: React.FC<RegisterProps> = ({
         <Typography variant="caption" display="block" color="textSecondary">
           Already have an account? <Link to="/login">login</Link>
         </Typography>
+
         <Button type="submit" variant="contained" color="primary">
           submit
         </Button>
