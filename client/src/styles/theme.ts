@@ -40,4 +40,13 @@ theme.overrides = {
       marginTop: theme.spacing(1),
     },
   },
+
+  MuiOutlinedInput: {
+    root: {
+      borderRadius: "0px",
+      "&:hover $notchedOutline": {
+        borderColor: "orange",
+      },
+    },
+  },
 };

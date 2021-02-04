@@ -25,27 +25,15 @@ const Input: React.FC<InputProps> = ({
       variant={variant}
       onChange={onChange}
       value={value}
-      classes={{ root: classes.root }}
-      InputProps={{
-        classes: {
-          root: classes.root,
-          notchedOutline: classes.notchedOutline,
-        },
-      }}
+      classes={{ root: classes.textField }}
     />
   );
 };
 
-const useStyle = makeStyles((theme) => ({
-  root: {
+const useStyle = makeStyles({
+  textField: {
     width: "100%",
-    borderRadius: "0px",
-    "&:hover $notchedOutline": {
-      borderColor: "orange",
-    },
   },
-  // This is needed
-  notchedOutline: {},
-}));
+});
 
 export default Input;
