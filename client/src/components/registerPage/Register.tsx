@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Box, Grid, makeStyles, Typography } from "@material-ui/core";
 import Input from "../share-components/Input";
+import { InputError } from "../../types/types";
 
 interface RegisterProps {
   credential: {
@@ -12,6 +13,13 @@ interface RegisterProps {
   };
   handleOnchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleError: (e: React.FocusEvent<HTMLInputElement>) => void;
+  errorState: {
+    username: InputError;
+    email: InputError;
+    password: InputError;
+    confirmPassword: InputError;
+  };
   data: any;
   loading: boolean;
 }
@@ -20,6 +28,8 @@ const Register: React.FC<RegisterProps> = ({
   credential,
   handleOnchange,
   handleSubmit,
+  handleError,
+  errorState,
   data,
   loading,
 }) => {
@@ -36,6 +46,8 @@ const Register: React.FC<RegisterProps> = ({
               label="Username"
               variant="outlined"
               onChange={handleOnchange}
+              handleError={handleError}
+              errorState={errorState.username}
               value={credential.username}
             />
           </Grid>
@@ -46,6 +58,8 @@ const Register: React.FC<RegisterProps> = ({
               label="Email"
               variant="outlined"
               onChange={handleOnchange}
+              handleError={handleError}
+              errorState={errorState.email}
               value={credential.email}
             />
           </Grid>
@@ -56,6 +70,8 @@ const Register: React.FC<RegisterProps> = ({
               label="Password"
               variant="outlined"
               onChange={handleOnchange}
+              handleError={handleError}
+              errorState={errorState.password}
               value={credential.password}
             />
           </Grid>
@@ -66,6 +82,8 @@ const Register: React.FC<RegisterProps> = ({
               label="Confirm Password"
               variant="outlined"
               onChange={handleOnchange}
+              handleError={handleError}
+              errorState={errorState.confirmPassword}
               value={credential.confirmPassword}
             />
           </Grid>
@@ -78,6 +96,7 @@ const Register: React.FC<RegisterProps> = ({
           submit
         </Button>
       </form>
+
       {loading && <h1>Loading</h1>}
       {data?.register.errors.length > 0 &&
         data.register.errors.map((error: any, index: number) => (

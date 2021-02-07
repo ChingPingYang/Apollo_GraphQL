@@ -23,6 +23,11 @@ export interface MenuItem {
   path: string;
 }
 
+export interface InputError {
+  error: boolean;
+  helperText: string;
+}
+
 /* Auth types*/
 export enum ACTION_AUTH {
   GET_USER_SUCCESS = "GET_USER_SUCCESS",
