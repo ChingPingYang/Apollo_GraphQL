@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, Suspense } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { AuthContext } from "./util/AuthContext";
 import { MessageContext } from "./util/MessageContext";
@@ -38,15 +38,17 @@ function App() {
       <MessageContext.Provider value={{ messageState, messageDispatch }}>
         <Router>
           <Nav />
-          <Switch>
-            {routeMap.map((route, index) =>
-              route.isPrivate ? (
-                <PrivateRoute key={index} {...route} />
-              ) : (
-                <PublicRoute key={index} {...route} />
-              )
-            )}
-          </Switch>
+          <Suspense fallback={<p>loading</p>}>
+            <Switch>
+              {routeMap.map((route, index) =>
+                route.isPrivate ? (
+                  <PrivateRoute key={index} {...route} />
+                ) : (
+                  <PublicRoute key={index} {...route} />
+                )
+              )}
+            </Switch>
+          </Suspense>
         </Router>
       </MessageContext.Provider>
     </AuthContext.Provider>

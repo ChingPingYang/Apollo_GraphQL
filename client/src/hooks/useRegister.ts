@@ -19,8 +19,6 @@ const useRegister = () => {
           payload: register.errors,
         });
       }
-      // This is for websocket to work... it will not work if we don't refresh when we register
-      window.location.href = "/";
     },
   });
   return { register, data, loading };

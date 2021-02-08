@@ -1,7 +1,8 @@
+import React from "react";
 import { Route } from "../../types/types";
-import Home from "../homePage/Home";
-import Register from "../registerPage/RegisterContainer";
-import Login from "../loginPage/LoginContainer";
+const Home = React.lazy(() => import("../homePage/Home"));
+const Register = React.lazy(() => import("../registerPage/RegisterContainer"));
+const Login = React.lazy(() => import("../loginPage/LoginContainer"));
 
 const routesMap: Route[] = [
   {
