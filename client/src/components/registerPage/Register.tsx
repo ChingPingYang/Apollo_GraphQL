@@ -22,6 +22,7 @@ interface RegisterProps {
   };
   data: any;
   loading: boolean;
+  disable: boolean;
 }
 
 const Register: React.FC<RegisterProps> = ({
@@ -32,6 +33,7 @@ const Register: React.FC<RegisterProps> = ({
   errorState,
   data,
   loading,
+  disable,
 }) => {
   const classes = useStyle();
 
@@ -92,7 +94,12 @@ const Register: React.FC<RegisterProps> = ({
           Already have an account? <Link to="/login">login</Link>
         </Typography>
 
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={disable}
+        >
           submit
         </Button>
       </form>
